@@ -433,7 +433,7 @@ function init_room(troom){
 		chests.push(new chest(0, 47, 15, 9));
 		chests.push(new chest(3, 48, 23, 9));
 		chests.push(new chest(3, 49, 31, 9));
-		chests.push(new chest(3, 50, 18, 8));
+		chests.push(new chest(2, 50, 18, 8));
 		chests.push(new chest(0, 51, 21, 8));
 		chests.push(new chest(2, 52, 28, 8));
 		chests.push(new chest(0, 53, 29, 8));
