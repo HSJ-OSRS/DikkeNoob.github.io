@@ -10,6 +10,8 @@ var reset_button = document.getElementById("roomr");
 reset_button.onclick = function(){init_room("r");};
 var reset_button = document.getElementById("rooms");
 reset_button.onclick = function(){init_room("s");};
+var undo_button = document.getElementById("undo");
+undo_button.onclick = function(){uinput.pop(); update();};
 var help_button = document.getElementById("help");
 var help_text = document.getElementById("helptext");
 help_button.onclick = function(){help_text.style.visibility=="hidden"?help_text.style.visibility="visible":help_text.style.visibility="hidden";};
@@ -121,6 +123,10 @@ class chest{
 		if((this.state == "pot" || this.state == "potsel") && !rem.includes(this.number)){
 			this.state = "idle";
 		}
+		if(this.state == "clicked" && !uinput.includes(this.number)){
+			this.state = "idle";
+			setTimeout(function(){update(false, 0, 0);}, 10)
+		}
 		if ((locx >= this.cx && locx <= this.cx + 13) && (locy >= this.cy && locy <= this.cy + 13)){
 			if((this.state != "clicked") && clicked){
 				uinput.push(this.number);
@@ -145,7 +151,7 @@ class chest{
 				this.state = "idle";
 			}
 		}
-		//ctx.fillText(this.number, this.cx, this.cy);
+		ctx.fillText(this.number, this.cx, this.cy);
 		if (this.state == "sel"){
 			ctx.drawImage(img_sel,this.cx-3,this.cy-3);
 		}
@@ -213,7 +219,7 @@ function update(clicked, locx, locy){
 		}
 	}
 	
-	//ctx.fillText(String(Math.floor((locx-2)/14)) + " " + String(Math.floor((locy-6)/14)), 30, 30);
+	ctx.fillText(String(Math.floor((locx-2)/14)) + " " + String(Math.floor((locy-6)/14)), 30, 30);
 }
 
 function init_room(troom){
@@ -301,6 +307,150 @@ function init_room(troom){
 		chests.push(new chest(2, 63, 33, 10));
 		chests.push(new chest(2, 64, 33, 13));
 	}
+		if (troom == "r"){
+		chests.push(new chest(0, 1, 13, 14));
+		chests.push(new chest(0, 2, 13, 18));
+		chests.push(new chest(0, 3, 14, 10));
+		chests.push(new chest(0, 4, 14, 12));
+		chests.push(new chest(1, 5, 15, 7));
+		chests.push(new chest(3, 6, 15, 18));
+		chests.push(new chest(3, 7, 15, 22));
+		chests.push(new chest(3, 8, 16, 9));
+		chests.push(new chest(1, 9, 16, 10));
+		chests.push(new chest(3, 10, 16, 13));
+		chests.push(new chest(1, 11, 16, 14));
+		chests.push(new chest(2, 12, 16, 16));
+		chests.push(new chest(0, 13, 17, 5));
+		chests.push(new chest(3, 14, 17, 22));
+		chests.push(new chest(2, 15, 18, 7));
+		chests.push(new chest(2, 16, 18, 11));
+		chests.push(new chest(3, 17, 18, 15));
+		chests.push(new chest(1, 18, 18, 18));
+		chests.push(new chest(0, 19, 19, 7));
+		chests.push(new chest(3, 20, 19, 9));
+		chests.push(new chest(1, 21, 19, 12));
+		chests.push(new chest(0, 22, 19, 17));
+		chests.push(new chest(3, 23, 19, 21));
+		chests.push(new chest(3, 24, 20, 14));
+		chests.push(new chest(1, 25, 20, 15));
+		chests.push(new chest(2, 26, 21, 7));
+		chests.push(new chest(0, 27, 21, 11));
+		chests.push(new chest(2, 28, 21, 18));
+		chests.push(new chest(3, 29, 21, 21));
+		chests.push(new chest(3, 30, 22, 6));
+		chests.push(new chest(1, 31, 22, 9));
+		chests.push(new chest(2, 32, 22, 13));
+		chests.push(new chest(3, 33, 22, 17));
+		chests.push(new chest(1, 34, 22, 19));
+		chests.push(new chest(3, 35, 23, 12));
+		chests.push(new chest(1, 36, 23, 15));
+		chests.push(new chest(0, 37, 23, 18));
+		chests.push(new chest(0, 38, 24, 7));
+		chests.push(new chest(2, 39, 24, 10));
+		chests.push(new chest(3, 40, 24, 20));
+		chests.push(new chest(3, 41, 25, 9));
+		chests.push(new chest(1, 42, 25, 11));
+		chests.push(new chest(0, 43, 25, 14));
+		chests.push(new chest(3, 44, 25, 17));
+		chests.push(new chest(1, 45, 25, 18));
+		chests.push(new chest(2, 46, 26, 6));
+		chests.push(new chest(0, 47, 26, 10));
+		chests.push(new chest(3, 48, 26, 20));
+		chests.push(new chest(1, 49, 27, 2));
+		chests.push(new chest(0, 50, 27, 6));
+		chests.push(new chest(3, 51, 27, 12));
+		chests.push(new chest(1, 52, 27, 13));
+		chests.push(new chest(2, 53, 27, 16));
+		chests.push(new chest(3, 54, 27, 19));
+		chests.push(new chest(1, 55, 28, 3));
+		chests.push(new chest(2, 56, 28, 9));
+		chests.push(new chest(3, 57, 28, 15));
+		chests.push(new chest(1, 58, 28, 17));
+		chests.push(new chest(3, 59, 29, 8));
+		chests.push(new chest(1, 60, 29, 12));
+		chests.push(new chest(0, 61, 29, 16));
+		chests.push(new chest(3, 62, 29, 19));
+		chests.push(new chest(2, 63, 30, 6));
+		chests.push(new chest(1, 64, 31, 12));
+		chests.push(new chest(2, 65, 32, 15));
+		chests.push(new chest(3, 66, 32, 19));
+		chests.push(new chest(3, 67, 33, 14));
+		chests.push(new chest(1, 68, 33, 16));
+		chests.push(new chest(0, 69, 34, 15));
+		chests.push(new chest(1, 70, 36, 12));
+		chests.push(new chest(3, 71, 35, 18));
+		chests.push(new chest(2, 72, 39, 12));
+		chests.push(new chest(2, 73, 38, 14));
+		chests.push(new chest(2, 74, 37, 16));
+	}
+	if (troom == "s"){
+		chests.push(new chest(0, 1, 19, 21));
+		chests.push(new chest(0, 2, 16, 20));
+		chests.push(new chest(0, 3, 18, 20));
+		chests.push(new chest(0, 4, 15, 18));
+		chests.push(new chest(1, 5, 21, 18));
+		chests.push(new chest(3, 6, 13, 17));
+		chests.push(new chest(3, 7, 18, 17));
+		chests.push(new chest(3, 8, 23, 17));
+		chests.push(new chest(1, 9, 28, 17));
+		chests.push(new chest(3, 10, 30, 17));
+		chests.push(new chest(1, 11, 15, 16));
+		chests.push(new chest(2, 12, 16, 16));
+		chests.push(new chest(0, 13, 18, 16));
+		chests.push(new chest(3, 14, 21, 16));
+		chests.push(new chest(2, 15, 26, 16));
+		chests.push(new chest(2, 16, 31, 16));
+		chests.push(new chest(3, 17, 18, 15));
+		chests.push(new chest(1, 18, 18, 18));
+		chests.push(new chest(0, 19, 19, 7));
+		chests.push(new chest(3, 20, 19, 9));
+		chests.push(new chest(1, 21, 19, 12));
+		chests.push(new chest(0, 22, 19, 17));
+		chests.push(new chest(3, 23, 19, 21));
+		chests.push(new chest(3, 24, 20, 14));
+		chests.push(new chest(1, 25, 20, 15));
+		chests.push(new chest(2, 26, 21, 7));
+		chests.push(new chest(0, 27, 21, 11));
+		chests.push(new chest(2, 28, 21, 18));
+		chests.push(new chest(3, 29, 21, 21));
+		chests.push(new chest(3, 30, 22, 6));
+		chests.push(new chest(1, 31, 22, 9));
+		chests.push(new chest(2, 32, 22, 13));
+		chests.push(new chest(3, 33, 22, 17));
+		chests.push(new chest(1, 34, 22, 19));
+		chests.push(new chest(3, 35, 23, 12));
+		chests.push(new chest(1, 36, 23, 15));
+		chests.push(new chest(0, 37, 23, 18));
+		chests.push(new chest(0, 38, 24, 7));
+		chests.push(new chest(2, 39, 24, 10));
+		chests.push(new chest(3, 40, 24, 20));
+		chests.push(new chest(3, 41, 25, 9));
+		chests.push(new chest(1, 42, 25, 11));
+		chests.push(new chest(0, 43, 25, 14));
+		chests.push(new chest(3, 44, 25, 17));
+		chests.push(new chest(1, 45, 25, 18));
+		chests.push(new chest(2, 46, 26, 6));
+		chests.push(new chest(0, 47, 26, 10));
+		chests.push(new chest(3, 48, 26, 20));
+		chests.push(new chest(1, 49, 27, 2));
+		chests.push(new chest(0, 50, 27, 6));
+		chests.push(new chest(3, 51, 27, 12));
+		chests.push(new chest(1, 52, 27, 13));
+		chests.push(new chest(2, 53, 27, 16));
+		chests.push(new chest(3, 54, 27, 19));
+		chests.push(new chest(1, 55, 28, 3));
+		chests.push(new chest(2, 56, 28, 9));
+		chests.push(new chest(3, 57, 28, 15));
+		chests.push(new chest(1, 58, 28, 17));
+		chests.push(new chest(3, 59, 29, 8));
+		chests.push(new chest(1, 60, 29, 12));
+		chests.push(new chest(0, 61, 29, 16));
+		chests.push(new chest(3, 62, 29, 19));
+		chests.push(new chest(2, 63, 30, 6));
+		chests.push(new chest(1, 64, 31, 12));
+		chests.push(new chest(2, 65, 32, 15));
+		chests.push(new chest(3, 66, 32, 19));
+	}
 }
 
-init_room("l");
+init_room("s");
