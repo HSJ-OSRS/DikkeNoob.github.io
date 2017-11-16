@@ -219,15 +219,15 @@ function update(clicked, locx, locy){
 function init_room(troom){
 	if (troom == "l"){
 		room = room_l;
-		c.style.background = "url('./assets/thieving_L.png')";
+		c.style.background = "url('http://dikkenoob.github.io/assets/thieving_L')";
 	}
 	if (troom == "r"){
 		room = room_r;
-		c.style.background = "url('./assets/thieving_R.png')";
+		c.style.background = "url('http://dikkenoob.github.io/assets/thieving_L')";
 	}
 	if (troom == "s"){
 		room = room_s;
-		c.style.background = "url('./assets/thieving_S.png')";
+		c.style.background = "url('http://dikkenoob.github.io/assets/thieving_L')";
 	}
 	currroom = troom;
 	chests.length = 0;
