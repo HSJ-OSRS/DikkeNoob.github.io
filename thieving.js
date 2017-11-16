@@ -453,4 +453,4 @@ function init_room(troom){
 	}
 }
 
-init_room("s");
+init_room("l");
