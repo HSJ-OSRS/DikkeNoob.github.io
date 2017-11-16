@@ -1,7 +1,18 @@
+// Ritalin tbow needs money PM him
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
+var currroom = "l";
 var reset_button = document.getElementById("reset");
+reset_button.onclick = function(){init_room(currroom);};
+var reset_button = document.getElementById("rooml");
 reset_button.onclick = function(){init_room("l");};
+var reset_button = document.getElementById("roomr");
+reset_button.onclick = function(){init_room("r");};
+var reset_button = document.getElementById("rooms");
+reset_button.onclick = function(){init_room("s");};
+var help_button = document.getElementById("help");
+var help_text = document.getElementById("helptext");
+help_button.onclick = function(){help_text.style.visibility=="hidden"?help_text.style.visibility="visible":help_text.style.visibility="hidden";};
 var img_poison0 = new Image();
 img_poison0.src = "assets/poison0.png";
 var img_poison1 = new Image();
@@ -208,14 +219,17 @@ function update(clicked, locx, locy){
 function init_room(troom){
 	if (troom == "l"){
 		room = room_l;
+		c.style.background = "url('./assets/thieving_L.png')";
 	}
 	if (troom == "r"){
-		room = room_l;
+		room = room_r;
+		c.style.background = "url('./assets/thieving_R.png')";
 	}
 	if (troom == "s"){
-		room = room_l;
+		room = room_s;
+		c.style.background = "url('./assets/thieving_S.png')";
 	}
-	
+	currroom = troom;
 	chests.length = 0;
 	uinput.length = 0;
 	rem.length = 0;
