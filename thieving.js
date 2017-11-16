@@ -1,5 +1,7 @@
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
+var reset_button = document.getElementById("reset");
+reset_button.onclick = function(){init_room("l");};
 var img_poison0 = new Image();
 img_poison0.src = "assets/poison0.png";
 var img_poison1 = new Image();
@@ -100,7 +102,6 @@ class chest{
 		this.number = number;
 		this.cx = px*14+2;
 		this.cy = py*14+6;
-		console.log(this.cx + " " + this.cy)
 	}
 	updatec(clicked, locx, locy){
 		if(rem.includes(this.number) && (this.state == "idle" || this.state == "sel")){
@@ -132,7 +133,6 @@ class chest{
 			if(this.state == "sel"){
 				this.state = "idle";
 			}
-			console.log("nah")
 		}
 		//ctx.fillText(this.number, this.cx, this.cy);
 		if (this.state == "sel"){
@@ -171,7 +171,6 @@ class chest{
 c.onmousemove = function (e) {
    var loc = windowToCanvas(c, e.clientX, e.clientY);
    update(false, loc.x, loc.y);
-   console.log(loc.x + "   " + loc.y);
 };
 
 c.onclick = function (e) {
@@ -203,9 +202,6 @@ function update(clicked, locx, locy){
 		}
 	}
 	
-	for (var h = 0, len = chests.length; h < len; h++) {
-		chests[h].updatec(clicked, locx, locy)
-	}
 	//ctx.fillText(String(Math.floor((locx-2)/14)) + " " + String(Math.floor((locy-6)/14)), 30, 30);
 }
 
@@ -221,6 +217,9 @@ function init_room(troom){
 	}
 	
 	chests.length = 0;
+	uinput.length = 0;
+	rem.length = 0;
+	ctx.clearRect(0, 0, c.width, c.height);
 	
 	if (troom == "l"){
 		chests.push(new chest(0, 1, 9, 13));
