@@ -1,4 +1,4 @@
-// Ritalin tbow needs gp PM him
+// Not Jerrod needs gp PM him
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 var currroom = "l";
