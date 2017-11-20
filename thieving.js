@@ -275,7 +275,7 @@ function init_room(troom){
 		chests.push(new chest(2, 30, 23, 6));
 		chests.push(new chest(0, 31, 23, 9));
 		chests.push(new chest(3, 32, 23, 14));
-		chests.push(new chest(0, 33, 23, 15));
+		chests.push(new chest(1, 33, 23, 15));
 		chests.push(new chest(2, 34, 23, 21));
 		chests.push(new chest(3, 35, 24, 5));
 		chests.push(new chest(1, 36, 24, 7));
@@ -289,7 +289,7 @@ function init_room(troom){
 		chests.push(new chest(1, 44, 26, 13));
 		chests.push(new chest(0, 45, 26, 15));
 		chests.push(new chest(0, 46, 26, 18));
-		chests.push(new chest(1, 47, 27, 3));
+		chests.push(new chest(1, 47, 27, 2));
 		chests.push(new chest(3, 48, 27, 10));
 		chests.push(new chest(2, 49, 28, 7));
 		chests.push(new chest(0, 50, 28, 11));
