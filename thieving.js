@@ -258,6 +258,9 @@ function windowToCanvas(canvas, x, y) {
 
 function update(clicked, locx, locy){
 	ctx.clearRect(0, 0, c.width, c.height);
+	if(mpoison){
+		ctx.drawImage(set_info,540,290);
+	}
 	if(tchest){
 		if(currroom=="l"){
 			ctx.drawImage(l_eff,0,0);
