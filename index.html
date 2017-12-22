@@ -1,17 +1,22 @@
 <html>
 <title>Thieving room helper</title>
 <style>body{background-color: #83d5fe;}</style>
-<canvas id="canvas" width="648" height="357" style="background: url('./assets/thieving_L.png')">
+<div><canvas id="canvas" width="648" height="357" style="background: url('./assets/thieving_L.png');float:left;">
 Your browser does not support the canvas element.
 </canvas>
-<br><button id="rooml">room L</button>
+<br><button id="tchest" style="display:block;">3 chest spots</button>
+<br><button id="mpoison" style="display:block;">most likely poison</button>
+<br><button id="nbats" style="display:block;">no bats chests</button>
+<br><button id="snumbers" style="display:block;">show chest numbers</button></div>
+<br><br><br><br><br><br><br><br><br><br><br><br><button id="rooml">room L</button>
 <button id="roomr">room R</button>
 <button id="rooms">room S</button>
 <button id="reset">reset</button>
 <button id="undo">undo</button>
 <button id="help">help</button>
 <br><br><div id="helptext" style="visibility: hidden;">Program made to help you find bats in the thieving room at raids
-<br><br>How to use: search random chests in the thieving room until you find a poison chest
+<br><br>How to use:
+<br>search random chests in the thieving room until you find a poison chest
 <br>Select the corresponding chest in the map
 <br>If done correctly, red circles should appear around certain other chests in the map
 <br>These circles indicate that there might be bats or poison in these chests

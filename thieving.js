@@ -2,6 +2,18 @@
 var c = document.getElementById("canvas");
 var ctx = c.getContext("2d");
 var currroom = "l";
+var snumbers = false;
+var tchest = false;
+var mpoison = false;
+var nbats = false;
+var snumbers_button = document.getElementById("snumbers");
+snumbers_button.onclick = function(){snumbers=!snumbers;update();};
+var mpoison_button = document.getElementById("mpoison");
+mpoison_button.onclick = function(){mpoison=!mpoison;update();};
+var nbats_button = document.getElementById("nbats");
+nbats_button.onclick = function(){nbats=!nbats;update();};
+var tchest_button = document.getElementById("tchest");
+tchest_button.onclick = function(){tchest=!tchest;update();};
 var reset_button = document.getElementById("reset");
 reset_button.onclick = function(){init_room(currroom);};
 var reset_button = document.getElementById("rooml");
@@ -27,6 +39,22 @@ var img_sel = new Image();
 img_sel.src = "assets/sel.png";
 var img_pot = new Image();
 img_pot.src = "assets/pot.png";
+var s_eff = new Image();
+s_eff.src = "assets/s_eff.png";
+var l_eff = new Image();
+l_eff.src = "assets/l_eff.png";
+var r_eff = new Image();
+r_eff.src = "assets/r_eff.png";
+var set_info = new Image();
+set_info.src = "assets/set_info.png";
+var green_circle = new Image();
+green_circle.src = "assets/green_circle.png";
+var yellow_circle = new Image();
+yellow_circle.src = "assets/yellow_circle.png";
+var blue_circle = new Image();
+blue_circle.src = "assets/blue_circle.png";
+var cross = new Image();
+cross.src = "assets/cross.png";
 var uinput = [];
 var rem = [];
 var chests = [];
@@ -120,6 +148,7 @@ class chest{
 	constructor(orientation, number, px, py) {
 		this.orient = orientation;
 		this.state = "idle";
+		this.sets = 0;
 		this.number = number;
 		this.cx = px*14+2;
 		this.cy = py*14+6;
@@ -159,7 +188,9 @@ class chest{
 				this.state = "idle";
 			}
 		}
-		//ctx.fillText(this.number, this.cx, this.cy);
+		if(snumbers){
+			ctx.fillText(this.number, this.cx, this.cy);
+		}
 		if (this.state == "sel"){
 			ctx.drawImage(img_sel,this.cx-3,this.cy-3);
 		}
@@ -183,6 +214,20 @@ class chest{
 		if (this.state == "potsel"){
 			ctx.drawImage(img_sel,this.cx-3,this.cy-3);
 			ctx.drawImage(img_pot,this.cx-3,this.cy-3);
+		}
+		if (mpoison){
+			if (this.sets == 4){
+				ctx.drawImage(yellow_circle,this.cx-1,this.cy-1);
+			}
+			if (this.sets == 3){
+				ctx.drawImage(green_circle,this.cx-1,this.cy-1);
+			}
+			if (this.sets == 2){
+				ctx.drawImage(blue_circle,this.cx-1,this.cy-1);
+			}
+		}
+		if (nbats && this.sets == 0){
+			ctx.drawImage(cross,this.cx-1,this.cy-1);
 		}
 	}
 	
@@ -213,6 +258,17 @@ function windowToCanvas(canvas, x, y) {
 
 function update(clicked, locx, locy){
 	ctx.clearRect(0, 0, c.width, c.height);
+	if(tchest){
+		if(currroom=="l"){
+			ctx.drawImage(l_eff,0,0);
+		}
+		if(currroom=="r"){
+			ctx.drawImage(r_eff,0,0);
+		}
+		if(currroom=="s"){
+			ctx.drawImage(s_eff,0,0);
+		}
+	}
 	for (var h = 0, len = chests.length; h < len; h++) {
 		chests[h].updatec(clicked, locx, locy)
 	}
@@ -226,7 +282,6 @@ function update(clicked, locx, locy){
 			}
 		}
 	}
-	
 	//ctx.fillText(String(Math.floor((locx-2)/14)) + " " + String(Math.floor((locy-6)/14)), 30, 30);
 }
 
@@ -459,6 +514,14 @@ function init_room(troom){
 		chests.push(new chest(2, 65, 33, 5));
 		chests.push(new chest(2, 66, 21, 20));
 	}
+	for(let i = 0; i<room.length;i++){
+		for(let j = 0; j<4;j++){
+			if(room[i][j]!=undefined){
+				chests[room[i][j]-1].sets+=1;
+			}
+		}
+	}
+	update();
 }
 
 init_room("l");
