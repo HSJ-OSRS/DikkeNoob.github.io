@@ -85,6 +85,7 @@ var room_l = [[1,16,17,55],
 [20,25,32,34],
 [20,28,51,62],
 [21,39,41,58],
+[22,25,54,64],
 [23,31,47,55],
 [23,33,37,60],
 [24,34,55],
@@ -159,6 +160,7 @@ class chest{
 		this.number = number;
 		this.cx = px*14+2;
 		this.cy = py*14+6;
+		this.excl = false;
 	}
 	updatec(clicked, locx, locy){
 		if(rem.includes(this.number) && (this.state == "idle" || this.state == "sel")){
@@ -253,6 +255,16 @@ c.onmousemove = function (e) {
 c.onclick = function (e) {
    var loc = windowToCanvas(c, e.clientX, e.clientY);
    update(true, loc.x, loc.y);
+};
+
+c.oncontextmenu = function (e) {
+	e.preventDefault();
+	var loc = windowToCanvas(c, e.clientX, e.clientY);
+	for (var h = 0, len = chests.length; h < len; h++) {
+		if(Math.floor((chests[h].cx-2)/14) == Math.floor((loc.x-2)/14) && Math.floor((chests[h].cy-2)/14) == Math.floor((loc.y-6)/14) && chests[h].state != "clicked"){
+			chests[h].excl = !chests[h].excl;
+		}
+	}
 };
 
 function windowToCanvas(canvas, x, y) {
