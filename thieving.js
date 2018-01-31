@@ -6,6 +6,9 @@ var snumbers = false;
 var tchest = false;
 var mpoison = false;
 var nbats = false;
+var actions = [];
+var temproom = [];
+var excl = [];
 var snumbers_button = document.getElementById("snumbers");
 snumbers_button.onclick = function(){snumbers=!snumbers;update();};
 var mpoison_button = document.getElementById("mpoison");
@@ -23,7 +26,7 @@ reset_button.onclick = function(){init_room("r");};
 var reset_button = document.getElementById("rooms");
 reset_button.onclick = function(){init_room("s");};
 var undo_button = document.getElementById("undo");
-undo_button.onclick = function(){uinput.pop(); update();};
+undo_button.onclick = function(){actions[0]=="l"?uinput.pop():excl.pop();actions.splice(0,1); setTimeout(function(){update(false, 0, 0);}, 10);setTimeout(function(){update(false, 0, 0);}, 10);};
 var help_button = document.getElementById("help");
 var help_text = document.getElementById("helptext");
 help_button.onclick = function(){help_text.style.visibility=="hidden"?help_text.style.visibility="visible":help_text.style.visibility="hidden";};
@@ -55,6 +58,8 @@ var blue_circle = new Image();
 blue_circle.src = "assets/blue_circle.png";
 var cross = new Image();
 cross.src = "assets/cross.png";
+var exclud = new Image();
+exclud.src = "assets/exclud.png";
 var uinput = [];
 var rem = [];
 var chests = [];
@@ -162,7 +167,6 @@ class chest{
 		this.number = number;
 		this.cx = px*14+2;
 		this.cy = py*14+6;
-		this.excl = false;
 	}
 	updatec(clicked, locx, locy){
 		if(rem.includes(this.number) && (this.state == "idle" || this.state == "sel")){
@@ -178,6 +182,7 @@ class chest{
 		if ((locx >= this.cx && locx <= this.cx + 13) && (locy >= this.cy && locy <= this.cy + 13)){
 			if((this.state != "clicked") && clicked){
 				uinput.push(this.number);
+				actions.unshift("l");
 			}
 			if(this.state == "idle"){
 				this.state = "sel";
@@ -240,6 +245,9 @@ class chest{
 		if (nbats && this.sets == 0){
 			ctx.drawImage(cross,this.cx-1,this.cy-1);
 		}
+		if (excl.includes(this.number)){
+			ctx.drawImage(exclud,this.cx-1,this.cy-1);
+		}
 	}
 	
 	setstate(){
@@ -264,7 +272,17 @@ c.oncontextmenu = function (e) {
 	var loc = windowToCanvas(c, e.clientX, e.clientY);
 	for (var h = 0, len = chests.length; h < len; h++) {
 		if(Math.floor((chests[h].cx-2)/14) == Math.floor((loc.x-2)/14) && Math.floor((chests[h].cy-2)/14) == Math.floor((loc.y-6)/14) && chests[h].state != "clicked"){
-			chests[h].excl = !chests[h].excl;
+			if (excl.includes(h+1)){
+				excl = excl.filter(item => ![h+1].includes(item));
+				setTimeout(function(){update(false, 0, 0);}, 10)
+				setTimeout(function(){update(false, 0, 0);}, 10)
+			}
+			else{
+				excl.push(h+1);
+				actions.unshift("r");
+				setTimeout(function(){update(false, 0, 0);}, 10)
+				setTimeout(function(){update(false, 0, 0);}, 10)
+			}
 		}
 	}
 };
@@ -296,12 +314,22 @@ function update(clicked, locx, locy){
 	for (var h = 0, len = chests.length; h < len; h++) {
 		chests[h].updatec(clicked, locx, locy)
 	}
+	temproom=room.slice();
+	for (var i = 0; i < temproom.length; i++) {
+		for (var j = 0; j < excl.length; j++){
+			if (temproom[i].includes(excl[j])){
+				temproom.splice(i,1);
+				--i;
+				break;
+			}
+		}
+	}
 	rem.length = 0;
-	for (var i = 0, len = room.length; i < len; i++) {
-		if ((room[i].includes(uinput[0]) && uinput[0] != undefined) && (room[i].includes(uinput[1]) || uinput[1] == undefined) && (room[i].includes(uinput[2]) || uinput[2] == undefined) && (room[i].includes(uinput[3]) || uinput[3] == undefined)){
-			for (var j = 0, lenj = room[i].length; j < lenj; j++){
-				if (room[i][j] != uinput){
-					rem.push(room[i][j]);
+	for (var i = 0, len = temproom.length; i < len; i++) {
+		if ((temproom[i].includes(uinput[0]) && uinput[0] != undefined) && (temproom[i].includes(uinput[1]) || uinput[1] == undefined) && (temproom[i].includes(uinput[2]) || uinput[2] == undefined) && (temproom[i].includes(uinput[3]) || uinput[3] == undefined)){
+			for (var j = 0, lenj = temproom[i].length; j < lenj; j++){
+				if (temproom[i][j] != uinput){
+					rem.push(temproom[i][j]);
 				}
 			}
 		}
@@ -326,6 +354,9 @@ function init_room(troom){
 	chests.length = 0;
 	uinput.length = 0;
 	rem.length = 0;
+	excl = [];
+	temproom = [];
+	actions = [];
 	ctx.clearRect(0, 0, c.width, c.height);
 	
 	if (troom == "l"){
