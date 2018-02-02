@@ -58,8 +58,14 @@ var blue_circle = new Image();
 blue_circle.src = "assets/blue_circle.png";
 var cross = new Image();
 cross.src = "assets/cross.png";
-var exclud = new Image();
-exclud.src = "assets/exclud.png";
+var img_grubs0 = new Image();
+img_grubs0.src = "assets/grubs0.png";
+var img_grubs1 = new Image();
+img_grubs1.src = "assets/grubs1.png";
+var img_grubs2 = new Image();
+img_grubs2.src = "assets/grubs2.png";
+var img_grubs3 = new Image();
+img_grubs3.src = "assets/grubs3.png";
 var uinput = [];
 var rem = [];
 var chests = [];
@@ -246,7 +252,18 @@ class chest{
 			ctx.drawImage(cross,this.cx-1,this.cy-1);
 		}
 		if (excl.includes(this.number)){
-			ctx.drawImage(exclud,this.cx-1,this.cy-1);
+			if(this.orient == 0){
+				ctx.drawImage(img_grubs0,this.cx,this.cy);
+			}
+			if(this.orient == 1){
+				ctx.drawImage(img_grubs1,this.cx,this.cy);
+			}
+			if(this.orient == 2){
+				ctx.drawImage(img_grubs2,this.cx,this.cy);
+			}
+			if(this.orient == 3){
+				ctx.drawImage(img_grubs3,this.cx,this.cy);
+			}
 		}
 	}
 	
